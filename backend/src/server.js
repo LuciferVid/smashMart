@@ -1,9 +1,11 @@
 const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
-const prisma = require('./db');
 
+// Load environment variables FIRST
 dotenv.config();
+
+const prisma = require('./db');
 
 const app = express();
 const PORT = process.env.PORT || 5000;

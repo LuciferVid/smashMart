@@ -15,7 +15,7 @@ exports.getCart = async (req, res) => {
 };
 
 exports.addToCart = async (req, res) => {
-    const client = new MongoClient(MONGODB_URI);
+    const client = new MongoClient(getMongoUri());
     try {
         const { productId, quantity } = req.body;
         const userId = req.userData.userId;

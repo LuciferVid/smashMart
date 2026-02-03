@@ -5,11 +5,12 @@ const { MongoClient, ObjectId } = require('mongodb');
 
 // We use native MongoDB driver for signup as a fallback because Prisma 
 // requires a Replica Set for transactions (even simple creates in some Mongo versions).
-const MONGODB_URI = process.env.DATABASE_URL || "mongodb://localhost:27017/badminton";
+// Use dynamic lookup to ensure we get the patched environment variable
+const getMongoUri = () => process.env.DATABASE_URL || "mongodb://localhost:27017/badminton";
 
 exports.signup = async (req, res) => {
     console.log("Signup Request Received:", req.body.email);
-    const client = new MongoClient(MONGODB_URI);
+    const client = new MongoClient(getMongoUri());
 
     try {
         const { email, password, name } = req.body;
