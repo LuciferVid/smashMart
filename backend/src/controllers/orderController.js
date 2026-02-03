@@ -2,7 +2,7 @@ const prisma = require('../db');
 const { MongoClient, ObjectId } = require('mongodb');
 
 // Use dynamic lookup to ensure we get the patched environment variable
-const getMongoUri = () => process.env.DATABASE_URL || "mongodb://localhost:27017/badminton";
+const getMongoUri = () => process.env.DATABASE_URL || "mongodb+srv://smashmart:Yogesh1987@smashmart.zax6zoc.mongodb.net/";
 
 exports.getOrders = async (req, res) => {
     try {
