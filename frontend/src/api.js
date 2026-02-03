@@ -1,4 +1,4 @@
-const API_URL = import.meta.env.VITE_API_URL;
+const API_URL = import.meta.env.VITE_API_URL || 'https://smashmart.onrender.com/api';
 
 export const fetchData = async (endpoint, options = {}) => {
     const token = localStorage.getItem('token');
@@ -25,7 +25,14 @@ export const fetchData = async (endpoint, options = {}) => {
                 const errorData = await response.json();
                 errorMessage = errorData.error || errorData.message || errorMessage;
             } else {
-                errorMessage = await response.text();
+                const text = await response.text();
+                // Check if the response looks like HTML (e.g. 404 page or 500 error page)
+                if (text.trim().startsWith('<')) {
+                    errorMessage = `Request failed with status ${response.status}. Please check your network or try again later.`;
+                    console.error('[API ERROR] Server returned HTML instead of JSON:', text);
+                } else {
+                    errorMessage = text || errorMessage;
+                }
             }
 
             console.error(`[API ERROR] ${response.status}: ${errorMessage}`);
