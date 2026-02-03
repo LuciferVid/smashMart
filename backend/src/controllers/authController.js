@@ -46,7 +46,8 @@ exports.signup = async (req, res) => {
 
     } catch (error) {
         console.error("Signup Internal Error:", error);
-        res.status(500).json({ error: 'Internal Server Error: ' + error.message });
+        // Sanitize error message for frontend
+        res.status(500).json({ error: 'Registration failed. Please check your connection and try again.' });
     } finally {
         await client.close();
     }
@@ -74,6 +75,7 @@ exports.login = async (req, res) => {
         res.json({ token, user: { id: user.id, email: user.email, name: user.name } });
     } catch (error) {
         console.error("Login Internal Error:", error);
-        res.status(500).json({ error: 'Internal Server Error: ' + error.message });
+        // Sanitize error message for frontend
+        res.status(500).json({ error: 'Login failed. Please try again later.' });
     }
 };
