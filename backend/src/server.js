@@ -24,6 +24,11 @@ app.use('/api/categories', categoryRoutes);
 app.use('/api/cart', cartRoutes);
 app.use('/api/orders', orderRoutes);
 
+// Global 404 Handler for API routes
+app.use('/api/*', (req, res) => {
+    res.status(404).json({ error: `API endpoint not found: ${req.method} ${req.originalUrl}` });
+});
+
 app.get('/', (req, res) => {
     res.send('Badminton E-commerce API is running...');
 });
