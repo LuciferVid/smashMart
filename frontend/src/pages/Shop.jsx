@@ -4,11 +4,16 @@ import { useAppContext } from '../context/AppContext';
 import { fetchData } from '../api';
 
 const Shop = () => {
-    const { addToCart, categories } = useAppContext();
+    const { addToCart, categories, cart } = useAppContext();
     const [products, setProducts] = useState([]);
     const [filteredProducts, setFilteredProducts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [activeCategory, setActiveCategory] = useState('All');
+
+    const getCartQuantity = (productId) => {
+        const cartItem = cart.find(item => (item.id || item._id) === productId);
+        return cartItem ? cartItem.quantity : 0;
+    };
 
     const query = new URLSearchParams(useLocation().search);
     const categoryId = query.get('category');
@@ -97,7 +102,13 @@ const Shop = () => {
                                         <p style={{ fontSize: '0.85rem', color: 'var(--text-dim)', marginBottom: '20px', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{product.description}</p>
                                         <div className="product-footer">
                                             <p className="product-price">${product.price}</p>
-                                            <button onClick={() => addToCart(product)} className="btn btn-primary" style={{ padding: '10px 20px', fontSize: '0.7rem' }}>Add to Cart</button>
+                                            {getCartQuantity(product.id || product._id) > 0 ? (
+                                                <button onClick={() => addToCart(product)} className="btn btn-primary" style={{ padding: '10px 20px', fontSize: '0.7rem', background: 'var(--accent)', color: '#000' }}>
+                                                    In Cart ({getCartQuantity(product.id || product._id)})
+                                                </button>
+                                            ) : (
+                                                <button onClick={() => addToCart(product)} className="btn btn-primary" style={{ padding: '10px 20px', fontSize: '0.7rem' }}>Add to Cart</button>
+                                            )}
                                         </div>
                                     </div>
                                 </div>

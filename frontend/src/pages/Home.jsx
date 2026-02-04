@@ -5,8 +5,13 @@ import { fetchData } from '../api';
 
 const Home = () => {
     const navigate = useNavigate();
-    const { addToCart } = useAppContext();
+    const { addToCart, cart } = useAppContext();
     const [products, setProducts] = useState([]);
+
+    const getCartQuantity = (productId) => {
+        const cartItem = cart.find(item => (item.id || item._id) === productId);
+        return cartItem ? cartItem.quantity : 0;
+    };
 
     useEffect(() => {
         const loadProducts = async () => {
@@ -14,7 +19,7 @@ const Home = () => {
                 const data = await fetchData('/products');
                 setProducts(data);
             } catch (err) {
-                console.error("Home: Failed to fetch products", err);
+                // Silently fail - will use fallback products
             }
         };
         loadProducts();
@@ -103,7 +108,13 @@ const Home = () => {
                                     <h3 className="product-name">{product.name}</h3>
                                     <div className="product-footer">
                                         <p className="product-price">${product.price}</p>
-                                        <button onClick={() => addToCart(product)} className="add-btn">+</button>
+                                        {getCartQuantity(product.id || product._id) > 0 ? (
+                                            <button onClick={() => addToCart(product)} className="add-btn" style={{ background: 'var(--accent)', color: '#000' }}>
+                                                +{getCartQuantity(product.id || product._id)}
+                                            </button>
+                                        ) : (
+                                            <button onClick={() => addToCart(product)} className="add-btn">+</button>
+                                        )}
                                     </div>
                                 </div>
                             </div>
