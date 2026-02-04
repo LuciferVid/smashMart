@@ -3,9 +3,6 @@ const API_URL = import.meta.env.VITE_API_URL || 'https://smashmart.onrender.com/
 export const fetchData = async (endpoint, options = {}) => {
     const token = localStorage.getItem('token');
 
-    // Log outgoing request for debugging
-    console.log(`[API REQUEST] ${options.method || 'GET'} ${API_URL}${endpoint}`);
-
     try {
         const response = await fetch(`${API_URL}${endpoint}`, {
             ...options,
@@ -16,34 +13,35 @@ export const fetchData = async (endpoint, options = {}) => {
             },
         });
 
-        // Try parsing JSON error if not OK
         if (!response.ok) {
             const contentType = response.headers.get("content-type");
-            let errorMessage = 'An unexpected error occurred';
+            let errorMessage = 'Service temporarily unavailable. Please try again.';
 
             if (contentType && contentType.includes("application/json")) {
-                const errorData = await response.json();
-                errorMessage = errorData.error || errorData.message || errorMessage;
+                try {
+                    const errorData = await response.json();
+                    errorMessage = errorData.error || errorData.message || errorMessage;
+                } catch {
+                    // If JSON parsing fails, use default message
+                }
             } else {
                 const text = await response.text();
-                // Check if the response looks like HTML (e.g. 404 page or 500 error page)
                 if (text.trim().startsWith('<')) {
-                    errorMessage = `Request failed with status ${response.status}. Please check your network or try again later.`;
-                    console.error('[API ERROR] Server returned HTML instead of JSON:', text);
+                    errorMessage = `Service error (${response.status}). Please check your connection and try again.`;
                 } else {
                     errorMessage = text || errorMessage;
                 }
             }
 
-            console.error(`[API ERROR] ${response.status}: ${errorMessage}`);
             throw new Error(errorMessage);
         }
 
         const data = await response.json();
-        console.log(`[API SUCCESS] ${endpoint}`, data);
         return data;
     } catch (err) {
-        console.error(`[API FATAL] ${endpoint}`, err.message);
+        if (err.name === 'TypeError' && err.message.includes('fetch')) {
+            throw new Error('Network error. Please check your internet connection.');
+        }
         throw err;
     }
 };

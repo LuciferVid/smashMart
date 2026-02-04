@@ -1,8 +1,7 @@
 const prisma = require('../db');
 const { MongoClient, ObjectId } = require('mongodb');
 
-// Use dynamic lookup to ensure we get the patched environment variable
-const getMongoUri = () => process.env.DATABASE_URL || "mongodb+srv://smashmart:Yogesh1987@smashmart.zax6zoc.mongodb.net/";
+const getMongoUri = () => process.env.DATABASE_URL || "mongodb://localhost:27017/badminton";
 
 exports.getOrders = async (req, res) => {
     try {
@@ -11,7 +10,7 @@ exports.getOrders = async (req, res) => {
         });
         res.json(orders);
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        res.status(500).json({ error: 'Failed to fetch orders' });
     }
 };
 
@@ -21,13 +20,19 @@ exports.createOrder = async (req, res) => {
         const { items, total } = req.body;
         const userId = req.userData.userId;
 
-        // Use native driver fallback for creation on standalone MongoDB
+        if (!items || !Array.isArray(items) || items.length === 0) {
+            return res.status(400).json({ error: 'Order items are required' });
+        }
+
+        if (!total || total <= 0) {
+            return res.status(400).json({ error: 'Valid order total is required' });
+        }
+
         await client.connect();
         const db = client.db();
         const ordersCollection = db.collection('Order');
         const cartsCollection = db.collection('Cart');
 
-        // Convert string ID to ObjectId for database consistency with Prisma
         const newOrder = {
             userId: new ObjectId(userId),
             items,
@@ -38,17 +43,16 @@ exports.createOrder = async (req, res) => {
 
         const result = await ordersCollection.insertOne(newOrder);
 
-        // Clear cart fallback
+        // Clear cart after successful order
         try {
             await cartsCollection.deleteOne({ userId: new ObjectId(userId) });
         } catch (e) {
-            console.warn("Order: Failed to clear cart", e.message);
+            // Cart clearing failure shouldn't fail the order
         }
 
         res.status(201).json({ id: result.insertedId, ...newOrder, userId });
     } catch (error) {
-        console.error("Order Creation Error:", error);
-        res.status(400).json({ error: error.message });
+        res.status(500).json({ error: 'Failed to create order' });
     } finally {
         await client.close();
     }
@@ -60,21 +64,23 @@ exports.deleteOrder = async (req, res) => {
         const { id } = req.params;
         const userId = req.userData.userId;
 
+        if (!id) {
+            return res.status(400).json({ error: 'Order ID is required' });
+        }
+
         await client.connect();
         const db = client.db();
         const ordersCollection = db.collection('Order');
 
-        // Verify the order belongs to the user before deleting
         const order = await ordersCollection.findOne({
             _id: new ObjectId(id),
             userId: new ObjectId(userId)
         });
 
         if (!order) {
-            return res.status(404).json({ error: 'Order not found or unauthorized' });
+            return res.status(404).json({ error: 'Order not found' });
         }
 
-        // Only allow deletion of pending orders
         if (order.status !== 'pending') {
             return res.status(400).json({ error: 'Only pending orders can be cancelled' });
         }
@@ -83,8 +89,7 @@ exports.deleteOrder = async (req, res) => {
 
         res.json({ message: 'Order cancelled successfully' });
     } catch (error) {
-        console.error("Order Deletion Error:", error);
-        res.status(400).json({ error: error.message });
+        res.status(500).json({ error: 'Failed to cancel order' });
     } finally {
         await client.close();
     }

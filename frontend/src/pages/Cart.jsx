@@ -33,12 +33,11 @@ const Cart = () => {
                 body: JSON.stringify(orderData)
             });
 
-            alert('Mission Accomplished. Your Astrex order has been confirmed and dispatched.');
+            alert('Order confirmed successfully!');
             clearCart();
             navigate('/');
         } catch (err) {
-            console.error("Checkout Error:", err);
-            alert('Logistics Error: Failed to transmit order. ' + err.message);
+            alert('Failed to process order: ' + err.message);
         } finally {
             setIsProcessing(false);
         }

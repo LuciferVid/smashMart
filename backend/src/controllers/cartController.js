@@ -1,7 +1,7 @@
 const prisma = require('../db');
 const { MongoClient, ObjectId } = require('mongodb');
 
-const MONGODB_URI = process.env.DATABASE_URL || "mongodb://localhost:27017/badminton";
+const getMongoUri = () => process.env.DATABASE_URL || "mongodb://localhost:27017/badminton";
 
 exports.getCart = async (req, res) => {
     try {
@@ -10,7 +10,7 @@ exports.getCart = async (req, res) => {
         });
         res.json(cart || { items: [] });
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        res.status(500).json({ error: 'Failed to fetch cart' });
     }
 };
 
@@ -20,12 +20,14 @@ exports.addToCart = async (req, res) => {
         const { productId, quantity } = req.body;
         const userId = req.userData.userId;
 
+        if (!productId || !quantity) {
+            return res.status(400).json({ error: 'Product ID and quantity are required' });
+        }
+
         await client.connect();
         const db = client.db();
         const cartsCollection = db.collection('Cart');
 
-        // Note: For native driver fallback on standalone, we use ObjectId for userId
-        // to stay compatible with Prisma which expects ObjectId in the _id/userId field.
         let cart = await cartsCollection.findOne({ userId: new ObjectId(userId) });
 
         if (!cart) {
@@ -50,25 +52,30 @@ exports.addToCart = async (req, res) => {
         }
         res.json(cart);
     } catch (error) {
-        console.error("Cart Error:", error);
-        res.status(400).json({ error: error.message });
+        res.status(500).json({ error: 'Failed to add item to cart' });
     } finally {
         await client.close();
     }
 };
 
 exports.removeFromCart = async (req, res) => {
-    const client = new MongoClient(MONGODB_URI);
+    const client = new MongoClient(getMongoUri());
     try {
         const { productId } = req.body;
         const userId = req.userData.userId;
+
+        if (!productId) {
+            return res.status(400).json({ error: 'Product ID is required' });
+        }
 
         await client.connect();
         const db = client.db();
         const cartsCollection = db.collection('Cart');
 
         let cart = await cartsCollection.findOne({ userId: new ObjectId(userId) });
-        if (!cart) throw new Error('Cart not found');
+        if (!cart) {
+            return res.status(404).json({ error: 'Cart not found' });
+        }
 
         const items = cart.items.filter(item => item.productId !== productId);
         await cartsCollection.updateOne(
@@ -77,7 +84,7 @@ exports.removeFromCart = async (req, res) => {
         );
         res.json({ ...cart, items });
     } catch (error) {
-        res.status(400).json({ error: error.message });
+        res.status(500).json({ error: 'Failed to remove item from cart' });
     } finally {
         await client.close();
     }

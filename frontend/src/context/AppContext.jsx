@@ -9,7 +9,6 @@ export const AppProvider = ({ children }) => {
     const [categories, setCategories] = useState([]);
     const [loading, setLoading] = useState(false);
 
-    // Persist cart to localStorage
     useEffect(() => {
         localStorage.setItem('cart', JSON.stringify(cart));
     }, [cart]);
@@ -20,7 +19,7 @@ export const AppProvider = ({ children }) => {
                 const data = await fetchData('/categories');
                 setCategories(data);
             } catch (err) {
-                console.error("Failed to load categories:", err);
+                // Silently fail - categories will remain empty
             }
         };
         loadCategories();
@@ -53,7 +52,6 @@ export const AppProvider = ({ children }) => {
 
     const addToCart = (product) => {
         setCart((prev) => {
-            // Support both id and _id for local state consistency
             const pId = product.id || product._id;
             const existing = prev.find((item) => (item.id || item._id) === pId);
 
@@ -67,7 +65,6 @@ export const AppProvider = ({ children }) => {
     };
 
     const removeFromCart = (productId) => {
-        console.log("Removing item:", productId);
         setCart((prev) => prev.filter((item) => {
             const itemId = item.id || item._id;
             return itemId !== productId;
