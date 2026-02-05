@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AppProvider } from './context/AppContext';
+import { UIProvider } from './context/UIContext';
+import GlobalUI from './components/GlobalUI';
 import ErrorBoundary from './components/ErrorBoundary';
 import Header from './components/Header';
 import Footer from './components/Footer';
@@ -17,23 +19,26 @@ function App() {
   return (
     <ErrorBoundary>
       <AppProvider>
-        <Router>
-          <div className="app">
-            <Header />
-            <main>
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/shop" element={<Shop />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/signup" element={<Signup />} />
-                <Route path="/cart" element={<Cart />} />
-                <Route path="/contact" element={<Contact />} />
-                <Route path="/orders" element={<Orders />} />
-              </Routes>
-            </main>
-            <Footer />
-          </div>
-        </Router>
+        <UIProvider>
+          <Router>
+            <div className="app">
+              <Header />
+              <GlobalUI />
+              <main>
+                <Routes>
+                  <Route path="/" element={<Home />} />
+                  <Route path="/shop" element={<Shop />} />
+                  <Route path="/login" element={<Login />} />
+                  <Route path="/signup" element={<Signup />} />
+                  <Route path="/cart" element={<Cart />} />
+                  <Route path="/contact" element={<Contact />} />
+                  <Route path="/orders" element={<Orders />} />
+                </Routes>
+              </main>
+              <Footer />
+            </div>
+          </Router>
+        </UIProvider>
       </AppProvider>
     </ErrorBoundary>
   );

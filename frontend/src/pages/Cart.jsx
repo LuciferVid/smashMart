@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAppContext } from '../context/AppContext';
+import { useUIContext } from '../context/UIContext';
 import { fetchData } from '../api';
 
 const Cart = () => {
@@ -8,9 +9,11 @@ const Cart = () => {
     const [isProcessing, setIsProcessing] = useState(false);
     const navigate = useNavigate();
 
+    const { showModal, showToast } = useUIContext();
+
     const handleCheckout = async () => {
         if (!user) {
-            alert('Please sign in to complete your order.');
+            showToast('Please sign in to complete your order.', 'info');
             navigate('/login');
             return;
         }
@@ -33,11 +36,17 @@ const Cart = () => {
                 body: JSON.stringify(orderData)
             });
 
-            alert('Order confirmed successfully!');
             clearCart();
-            navigate('/');
+
+            showModal({
+                title: 'Order Confirmed',
+                message: 'Thank you for your purchase! Your gear is being prepared for shipment.',
+                type: 'success',
+                onConfirm: () => navigate('/')
+            });
+
         } catch (err) {
-            alert('Failed to process order: ' + err.message);
+            showToast('Failed to process order: ' + err.message, 'error');
         } finally {
             setIsProcessing(false);
         }

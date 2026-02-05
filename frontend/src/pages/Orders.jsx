@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAppContext } from '../context/AppContext';
+import { useUIContext } from '../context/UIContext';
 import { fetchData } from '../api';
 
 const Orders = () => {
@@ -31,26 +32,33 @@ const Orders = () => {
         loadOrders();
     }, [user, navigate]);
 
+    const { showModal, showToast } = useUIContext();
+
     const handleCancelOrder = async (orderId) => {
-        if (!window.confirm('Are you sure you want to cancel this order?')) {
-            return;
-        }
+        showModal({
+            title: 'Cancel Order',
+            message: 'Are you sure you want to cancel this order? This action cannot be undone.',
+            type: 'confirm',
+            confirmText: 'Yes, Cancel',
+            cancelText: 'Keep Order',
+            onConfirm: async () => {
+                try {
+                    await fetchData(`/orders/${orderId}`, {
+                        method: 'DELETE'
+                    });
 
-        try {
-            await fetchData(`/orders/${orderId}`, {
-                method: 'DELETE'
-            });
+                    // Refresh orders list
+                    const data = await fetchData('/orders');
+                    const sorted = data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+                    setOrders(sorted);
 
-            // Refresh orders list
-            const data = await fetchData('/orders');
-            const sorted = data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-            setOrders(sorted);
-
-            alert('Order cancelled successfully!');
-        } catch (err) {
-            console.error("Failed to cancel order:", err);
-            alert('Failed to cancel order: ' + err.message);
-        }
+                    showToast('Order cancelled successfully', 'success');
+                } catch (err) {
+                    console.error("Failed to cancel order:", err);
+                    showToast('Failed to cancel order: ' + err.message, 'error');
+                }
+            }
+        });
     };
 
     if (!user) return null;
