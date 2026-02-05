@@ -60,18 +60,18 @@ const Shop = () => {
             </div>
 
             {/* FEATURED VISUALS */}
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '20px', marginBottom: '80px', height: '220px' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '20px', marginBottom: '80px', height: '180px' }}>
                 <div style={{ position: 'relative', borderRadius: '12px', overflow: 'hidden', border: '1px solid var(--border)' }}>
-                    <img src="https://images.unsplash.com/photo-1626225967045-2c390255979d?q=80&w=800" style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.4 }} alt="Rackets" />
-                    <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 900, fontSize: '1.2rem', letterSpacing: '4px', textShadow: '0 4px 10px rgba(0,0,0,0.5)' }}>PRO RACKETS</div>
+                    <img src="https://images.unsplash.com/photo-1617083281297-af330b457f7d?q=80&w=800" style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.3 }} alt="Rackets" />
+                    <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 900, fontSize: '1rem', letterSpacing: '4px' }}>PRO RACKETS</div>
                 </div>
                 <div style={{ position: 'relative', borderRadius: '12px', overflow: 'hidden', border: '1px solid var(--border)' }}>
-                    <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=800" style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.4 }} alt="Shoes" />
-                    <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 900, fontSize: '1.2rem', letterSpacing: '4px', textShadow: '0 4px 10px rgba(0,0,0,0.5)' }}>ELITE FOOTWEAR</div>
+                    <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=800" style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.3 }} alt="Shoes" />
+                    <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 900, fontSize: '1rem', letterSpacing: '4px' }}>ELITE FOOTWEAR</div>
                 </div>
                 <div style={{ position: 'relative', borderRadius: '12px', overflow: 'hidden', border: '1px solid var(--border)' }}>
-                    <img src="https://images.unsplash.com/photo-1613912303663-1937e0da292c?q=80&w=800" style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.4 }} alt="Shuttles" />
-                    <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 900, fontSize: '1.2rem', letterSpacing: '4px', textShadow: '0 4px 10px rgba(0,0,0,0.5)' }}>PREMIUM SHUTTLES</div>
+                    <img src="https://images.unsplash.com/photo-1626248249518-b16013cd4e42?q=80&w=800" style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.3 }} alt="Shuttles" />
+                    <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 900, fontSize: '1rem', letterSpacing: '4px' }}>PREMIUM SHUTTLES</div>
                 </div>
             </div>
 

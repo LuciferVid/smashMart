@@ -52,11 +52,7 @@ const Contact = () => {
                             <p style={{ fontWeight: 700, color: 'var(--accent)' }}>support@astrex.com</p>
                         </div>
 
-                        <div style={{ marginBottom: '50px' }}>
-                            <h3 style={{ fontSize: '1.5rem', fontWeight: 800, marginBottom: '15px' }}>Global Headquarters</h3>
-                            <p style={{ color: 'var(--text-dim)', marginBottom: '10px' }}>Minato-ku, Tokyo</p>
-                            <p style={{ color: 'var(--text-dim)' }}>Japan, 105-0001</p>
-                        </div>
+
 
                         <div style={{ background: 'var(--bg-sub)', padding: '30px', borderRadius: '12px', border: '1px solid var(--border)' }}>
                             <h4 style={{ marginBottom: '20px' }}>Follow Our Tour</h4>
