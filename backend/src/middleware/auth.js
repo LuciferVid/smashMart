@@ -3,12 +3,20 @@ const jwt = require('jsonwebtoken');
 module.exports = (req, res, next) => {
     try {
         const authHeader = req.headers.authorization;
-        if (!authHeader) {
+        
+        // Check if authorization header exists and is not empty
+        if (!authHeader || typeof authHeader !== 'string' || authHeader.trim() === '') {
             return res.status(401).json({ error: 'Authentication required' });
         }
 
-        const token = authHeader.split(' ')[1];
-        if (!token) {
+        // Check if it starts with 'Bearer '
+        if (!authHeader.startsWith('Bearer ')) {
+            return res.status(401).json({ error: 'Invalid authentication format' });
+        }
+
+        const token = authHeader.substring(7).trim(); // Remove 'Bearer ' prefix
+        
+        if (!token || token === '') {
             return res.status(401).json({ error: 'Invalid authentication format' });
         }
 
@@ -19,7 +27,7 @@ module.exports = (req, res, next) => {
 
         const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
         
-        if (!decodedToken.userId) {
+        if (!decodedToken || !decodedToken.userId) {
             return res.status(401).json({ error: 'Invalid token payload' });
         }
 

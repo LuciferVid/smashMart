@@ -1,13 +1,8 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const prisma = require('../db');
-const { MongoClient, ObjectId } = require('mongodb');
-
-const getMongoUri = () => process.env.DATABASE_URL || "mongodb://localhost:27017/badminton";
 
 exports.signup = async (req, res) => {
-    const client = new MongoClient(getMongoUri());
-
     try {
         const { email, password, name } = req.body;
 
@@ -22,34 +17,27 @@ exports.signup = async (req, res) => {
 
         const hashedPassword = await bcrypt.hash(password, 10);
 
-        await client.connect();
-        const db = client.db();
-        const usersCollection = db.collection('User');
-
-        const newUser = {
-            email,
-            password: hashedPassword,
-            name,
-            role: 'user',
-            createdAt: new Date()
-        };
-
-        const result = await usersCollection.insertOne(newUser);
-        const userId = result.insertedId.toString();
+        // Use Prisma to create user for consistency
+        const newUser = await prisma.user.create({
+            data: {
+                email,
+                password: hashedPassword,
+                name,
+                role: 'user'
+            }
+        });
 
         if (!process.env.JWT_SECRET) {
             console.error('JWT_SECRET is not set in environment variables');
             return res.status(500).json({ error: 'Server configuration error' });
         }
 
-        const token = jwt.sign({ userId }, process.env.JWT_SECRET, { expiresIn: '24h' });
-        res.status(201).json({ token, user: { id: userId, email, name } });
+        const token = jwt.sign({ userId: newUser.id }, process.env.JWT_SECRET, { expiresIn: '24h' });
+        res.status(201).json({ token, user: { id: newUser.id, email: newUser.email, name: newUser.name } });
 
     } catch (error) {
         console.error('Signup error:', error);
         res.status(500).json({ error: 'Registration failed. Please try again.' });
-    } finally {
-        await client.close();
     }
 };
 
