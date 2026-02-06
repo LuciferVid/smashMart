@@ -37,10 +37,16 @@ exports.signup = async (req, res) => {
         const result = await usersCollection.insertOne(newUser);
         const userId = result.insertedId.toString();
 
-        const token = jwt.sign({ userId }, process.env.JWT_SECRET || 'secret', { expiresIn: '24h' });
+        if (!process.env.JWT_SECRET) {
+            console.error('JWT_SECRET is not set in environment variables');
+            return res.status(500).json({ error: 'Server configuration error' });
+        }
+
+        const token = jwt.sign({ userId }, process.env.JWT_SECRET, { expiresIn: '24h' });
         res.status(201).json({ token, user: { id: userId, email, name } });
 
     } catch (error) {
+        console.error('Signup error:', error);
         res.status(500).json({ error: 'Registration failed. Please try again.' });
     } finally {
         await client.close();
@@ -66,9 +72,15 @@ exports.login = async (req, res) => {
             return res.status(401).json({ error: 'Invalid email or password' });
         }
 
-        const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET || 'secret', { expiresIn: '24h' });
+        if (!process.env.JWT_SECRET) {
+            console.error('JWT_SECRET is not set in environment variables');
+            return res.status(500).json({ error: 'Server configuration error' });
+        }
+
+        const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, { expiresIn: '24h' });
         res.json({ token, user: { id: user.id, email: user.email, name: user.name } });
     } catch (error) {
+        console.error('Login error:', error);
         res.status(500).json({ error: 'Login failed. Please try again.' });
     }
 };
