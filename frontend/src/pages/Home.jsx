@@ -168,23 +168,23 @@ const Home = () => {
                 </div>
             </section>
 
-            {/* IMAGE GALLERY */}
+            {/* IMAGE GALLERY - The Astrex Circuit (using your uploaded images) */}
             <section className="section container">
                 <div className="section-title">
                     <h2 style={{ margin: 0 }}>The Astrex Circuit</h2>
                 </div>
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gridAutoRows: '250px', gap: '20px' }}>
                     <div style={{ gridColumn: 'span 2', gridRow: 'span 2', borderRadius: '12px', overflow: 'hidden' }}>
-                        <img src="https://images.unsplash.com/photo-1554068865-24cecd4e34b8?q=80&w=1200" style={{ width: '100%', height: '100%', objectFit: 'cover' }} alt="Badminton Action" />
+                        <img src="/images/astrex-circuit-hero.png" style={{ width: '100%', height: '100%', objectFit: 'cover' }} alt="The Astrex Circuit" />
                     </div>
                     <div style={{ borderRadius: '12px', overflow: 'hidden' }}>
-                        <img src="https://images.unsplash.com/photo-1554068865-24cecd4e34b8?q=80&w=800" style={{ width: '100%', height: '100%', objectFit: 'cover' }} alt="Racket Detail" />
+                        <img src="/images/racket-yonex-teal.png" style={{ width: '100%', height: '100%', objectFit: 'cover' }} alt="Racket Detail" />
                     </div>
                     <div style={{ borderRadius: '12px', overflow: 'hidden' }}>
-                        <img src="https://images.unsplash.com/photo-1613912303663-1937e0da292c?q=80&w=800" style={{ width: '100%', height: '100%', objectFit: 'cover' }} alt="Shuttlecocks" />
+                        <img src="/images/shuttle-mavis-350.png" style={{ width: '100%', height: '100%', objectFit: 'cover' }} alt="Shuttlecocks" />
                     </div>
                     <div style={{ gridColumn: 'span 2', borderRadius: '12px', overflow: 'hidden' }}>
-                        <img src="https://images.unsplash.com/photo-1521537634581-0dced2fee2ef?q=80&w=1200" style={{ width: '100%', height: '100%', objectFit: 'cover', transform: 'translateY(-20%)' }} alt="Action" />
+                        <img src="/images/shuttle-neon-yellow.png" style={{ width: '100%', height: '100%', objectFit: 'cover', transform: 'translateY(-20%)' }} alt="Action" />
                     </div>
                 </div>
             </section>
