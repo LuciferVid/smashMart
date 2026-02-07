@@ -3,6 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { useAppContext } from '../context/AppContext';
 import { useUIContext } from '../context/UIContext';
 import { fetchData } from '../api';
+import { getProductImage } from '../utils/racketImages';
 
 const Orders = () => {
     const { user } = useAppContext();
@@ -133,8 +134,8 @@ const Orders = () => {
                                         <div key={idx} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: idx === order.items.length - 1 ? 'none' : '1px solid rgba(255,255,255,0.05)', paddingBottom: idx === order.items.length - 1 ? 0 : '15px' }}>
                                             <div style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
                                                 <div style={{ width: '50px', height: '50px', background: '#000', borderRadius: '4px', overflow: 'hidden', border: '1px solid var(--border)' }}>
-                                                    {item.image ? (
-                                                        <img src={item.image} alt={item.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                                                    {(getProductImage(item) || item.image) ? (
+                                                        <img src={getProductImage(item) || item.image} alt={item.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                                                     ) : (
                                                         <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.6rem', color: 'var(--text-dim)' }}>GEAR</div>
                                                     )}

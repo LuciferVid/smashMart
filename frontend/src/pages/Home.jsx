@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAppContext } from '../context/AppContext';
 import { fetchData } from '../api';
+import { getProductImage } from '../utils/racketImages';
 
 const Home = () => {
     const navigate = useNavigate();
@@ -27,7 +28,7 @@ const Home = () => {
 
     // Fallback products if DB is empty
     const displayProducts = products.length > 0 ? products.slice(0, 8) : [
-        { id: '1', name: "Astrex Phantom X-99 Ultra", price: 259.99, image: "https://images.unsplash.com/photo-1626225967045-2c390255979d?q=80&w=800", category: 'Racket' },
+        { id: '1', name: "Astrex Phantom X-99 Ultra", price: 259.99, image: "/images/racket-yonex-blue.png", category: 'Racket' },
         { id: '2', name: "Astrex Orbital Pro Shuttle", price: 44.99, image: "https://images.unsplash.com/photo-1613912303663-1937e0da292c?q=80&w=800", category: 'Shuttle' },
         { id: '3', name: "Gravity Elite Footwear", price: 179.99, image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=800", category: 'Shoes' },
         { id: '4', name: "Carbon-Trek Pro Bag", price: 129.99, image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?q=80&w=800", category: 'Bags' },
@@ -100,7 +101,7 @@ const Home = () => {
                         {displayProducts.map(product => (
                             <div key={product.id || product._id} className="product-card">
                                 <div className="product-image" onClick={() => navigate('/shop')}>
-                                    <img src={product.image} alt={product.name} />
+                                    <img src={getProductImage(product) || product.image} alt={product.name} />
                                     <div style={{ position: 'absolute', top: '15px', left: '15px', background: '#fff', color: '#000', padding: '4px 10px', fontSize: '0.6rem', fontWeight: 900, borderRadius: '2px' }}>NEW</div>
                                 </div>
                                 <div className="product-info">
@@ -140,25 +141,25 @@ const Home = () => {
                 </div>
             </section>
 
-            {/* PERFORMANCE CATEGORIES */}
+            {/* PERFORMANCE CATEGORIES - your uploaded images by category */}
             <section className="section container">
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '30px', height: '500px' }}>
                     <div style={{ position: 'relative', overflow: 'hidden', borderRadius: '12px' }}>
-                        <img src="https://images.unsplash.com/photo-1554068865-24cecd4e34b8?q=80&w=800" style={{ width: '100%', height: '100%', objectFit: 'cover' }} alt="Rackets" />
+                        <img src="/images/racket-yonex-blue.png" style={{ width: '100%', height: '100%', objectFit: 'cover' }} alt="Rackets" />
                         <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.8), transparent)', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', padding: '40px' }}>
                             <h3 style={{ fontSize: '2rem', fontWeight: 900 }}>RACKETS</h3>
                             <Link to="/shop" style={{ color: 'var(--accent)', fontWeight: 800, textDecoration: 'none', marginTop: '10px' }}>Shop Now</Link>
                         </div>
                     </div>
                     <div style={{ position: 'relative', overflow: 'hidden', borderRadius: '12px' }}>
-                        <img src="https://images.unsplash.com/photo-1613912303663-1937e0da292c?q=80&w=800" style={{ width: '100%', height: '100%', objectFit: 'cover' }} alt="Shuttles" />
+                        <img src="/images/shuttle-mavis-350.png" style={{ width: '100%', height: '100%', objectFit: 'cover' }} alt="Shuttles" />
                         <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.8), transparent)', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', padding: '40px' }}>
                             <h3 style={{ fontSize: '2rem', fontWeight: 900 }}>SHUTTLES</h3>
                             <Link to="/shop" style={{ color: 'var(--accent)', fontWeight: 800, textDecoration: 'none', marginTop: '10px' }}>Shop Now</Link>
                         </div>
                     </div>
                     <div style={{ position: 'relative', overflow: 'hidden', borderRadius: '12px' }}>
-                        <img src="https://images.unsplash.com/photo-1521537634581-0dced2fee2ef?q=80&w=800" style={{ width: '100%', height: '100%', objectFit: 'cover' }} alt="Apparel" />
+                        <img src="/images/apparel-perfly-white-teal.png" style={{ width: '100%', height: '100%', objectFit: 'cover' }} alt="Apparel" />
                         <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.8), transparent)', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', padding: '40px' }}>
                             <h3 style={{ fontSize: '2rem', fontWeight: 900 }}>APPAREL</h3>
                             <Link to="/shop" style={{ color: 'var(--accent)', fontWeight: 800, textDecoration: 'none', marginTop: '10px' }}>Shop Now</Link>

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useAppContext } from '../context/AppContext';
 import { fetchData } from '../api';
+import { getProductImage } from '../utils/racketImages';
 
 const Shop = () => {
     const { addToCart, categories, cart } = useAppContext();
@@ -62,15 +63,15 @@ const Shop = () => {
             {/* FEATURED VISUALS */}
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '20px', marginBottom: '80px', height: '180px' }}>
                 <div style={{ position: 'relative', borderRadius: '12px', overflow: 'hidden', border: '1px solid var(--border)' }}>
-                    <img src="https://images.unsplash.com/photo-1617083281297-af330b457f7d?q=80&w=800" style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.3 }} alt="Rackets" />
+                    <img src="/images/racket-yonex-blue.png" style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.3 }} alt="Rackets" />
                     <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 900, fontSize: '1rem', letterSpacing: '4px' }}>PRO RACKETS</div>
                 </div>
                 <div style={{ position: 'relative', borderRadius: '12px', overflow: 'hidden', border: '1px solid var(--border)' }}>
-                    <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=800" style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.3 }} alt="Shoes" />
+                    <img src="/images/shoe-yonex-aerus.png" style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.3 }} alt="Shoes" />
                     <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 900, fontSize: '1rem', letterSpacing: '4px' }}>ELITE FOOTWEAR</div>
                 </div>
                 <div style={{ position: 'relative', borderRadius: '12px', overflow: 'hidden', border: '1px solid var(--border)' }}>
-                    <img src="https://images.unsplash.com/photo-1626248249518-b16013cd4e42?q=80&w=800" style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.3 }} alt="Shuttles" />
+                    <img src="/images/shuttle-mavis-350.png" style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.3 }} alt="Shuttles" />
                     <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 900, fontSize: '1rem', letterSpacing: '4px' }}>PREMIUM SHUTTLES</div>
                 </div>
             </div>
@@ -94,7 +95,7 @@ const Shop = () => {
                             {filteredProducts.map(product => (
                                 <div key={product.id || product._id} className="product-card">
                                     <div className="product-image">
-                                        <img src={product.image} alt={product.name} />
+                                        <img src={getProductImage(product) || product.image} alt={product.name} />
                                     </div>
                                     <div className="product-info">
                                         <div className="product-category">Performance Series</div>

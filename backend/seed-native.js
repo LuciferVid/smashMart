@@ -1,7 +1,7 @@
 const { MongoClient } = require('mongodb');
 require('dotenv').config();
 
-const uri = process.env.DATABASE_URL || "mongodb://localhost:27017/badminton";
+const uri = process.env.DATABASE_URL || "mongodb+srv://smashmart:Yogesh1987@smashmart.zax6zoc.mongodb.net/badminton";
 const client = new MongoClient(uri);
 
 async function run() {
@@ -35,14 +35,14 @@ async function run() {
         console.log("Inserted categories");
 
         const prods = [
-            // Rackets
+            // Rackets (using your uploaded racket images)
             {
                 name: "Astrex Phantom X-99 Ultra",
                 description: "The peak of carbon engineering. Ultra-stiff, head-heavy power unit for explosive smashes.",
                 price: 259.99,
                 categoryId: insertedCats.insertedIds[0],
                 stock: 15,
-                image: "https://images.unsplash.com/photo-1616248249518-b16013cd4e42?q=80&w=600&sat=-100&con=40&sepia=30", // Black/Gold Style
+                image: "/images/racket-yonex-blue.png",
                 createdAt: now
             },
             {
@@ -51,7 +51,7 @@ async function run() {
                 price: 189.99,
                 categoryId: insertedCats.insertedIds[0],
                 stock: 20,
-                image: "https://images.unsplash.com/photo-1620371350502-999e9a7d80a4?q=80&w=600&hue=180&sat=20", // Blue Style
+                image: "/images/racket-mizuno-fortius.png",
                 createdAt: now
             },
             {
@@ -60,7 +60,7 @@ async function run() {
                 price: 149.99,
                 categoryId: insertedCats.insertedIds[0],
                 stock: 25,
-                image: "https://images.unsplash.com/photo-1554068865-24cecd4e34b8?q=80&w=600&hue=30&sat=50", // Red/Warm Style
+                image: "/images/racket-nanospeed-nuclear75.png",
                 createdAt: now
             },
             {
@@ -69,7 +69,7 @@ async function run() {
                 price: 229.99,
                 categoryId: insertedCats.insertedIds[0],
                 stock: 12,
-                image: "https://images.unsplash.com/photo-1617083275225-6248b9d49110?q=80&w=600&con=50&sat=-50", // Dark/Power Style
+                image: "/images/racket-yonex-teal.png",
                 createdAt: now
             },
             {
@@ -78,18 +78,18 @@ async function run() {
                 price: 199.99,
                 categoryId: insertedCats.insertedIds[0],
                 stock: 18,
-                image: "https://images.unsplash.com/photo-1626225967045-2c390255979d?q=80&w=600", // Standard
+                image: "/images/racket-black-green.png",
                 createdAt: now
             },
 
-            // Shuttles
+            // Shuttles (using your uploaded premium shuttle images)
             {
                 name: "Astrex Orbital v.50 Pro",
                 description: "Aeronautically tested tournament grade goose feather shuttlecocks.",
                 price: 44.99,
                 categoryId: insertedCats.insertedIds[1],
                 stock: 100,
-                image: "https://images.unsplash.com/photo-1521537634581-0dced2fee2ef?q=80&w=600",
+                image: "/images/shuttle-leijiaer-tube.png",
                 createdAt: now
             },
             {
@@ -98,7 +98,7 @@ async function run() {
                 price: 24.99,
                 categoryId: insertedCats.insertedIds[1],
                 stock: 200,
-                image: "https://images.unsplash.com/photo-1521537634581-0dced2fee2ef?q=80&w=600&hue=180", // Cool nylon look
+                image: "/images/shuttle-kunli.png",
                 createdAt: now
             },
             {
@@ -107,7 +107,7 @@ async function run() {
                 price: 39.99,
                 categoryId: insertedCats.insertedIds[1],
                 stock: 150,
-                image: "https://images.unsplash.com/photo-1521537634581-0dced2fee2ef?q=80&w=600&sepia=50", // Gold/Warm
+                image: "/images/shuttle-mavis-350.png",
                 createdAt: now
             },
             {
@@ -116,18 +116,18 @@ async function run() {
                 price: 19.99,
                 categoryId: insertedCats.insertedIds[1],
                 stock: 300,
-                image: "https://images.unsplash.com/photo-1521537634581-0dced2fee2ef?q=80&w=600&con=20",
+                image: "/images/shuttle-neon-yellow.png",
                 createdAt: now
             },
 
-            // Shoes
+            // Shoes (using your uploaded shoe images)
             {
                 name: "Astrex Gravity Elite III",
                 description: "Power cushion technology with lateral stability for elite court movement.",
                 price: 179.99,
                 categoryId: insertedCats.insertedIds[2],
                 stock: 25,
-                image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=600&hue=180", // Blue
+                image: "/images/shoe-yonex-aerus.png",
                 createdAt: now
             },
             {
@@ -136,7 +136,7 @@ async function run() {
                 price: 129.99,
                 categoryId: insertedCats.insertedIds[2],
                 stock: 40,
-                image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=600&hue=0", // Red
+                image: "/images/shoe-yonex-blue.png",
                 createdAt: now
             },
             {
@@ -145,7 +145,7 @@ async function run() {
                 price: 159.99,
                 categoryId: insertedCats.insertedIds[2],
                 stock: 30,
-                image: "https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?q=80&w=600&hue=90", // Neon Green
+                image: "/images/shoe-yonex-red.png",
                 createdAt: now
             },
             {
@@ -154,18 +154,18 @@ async function run() {
                 price: 99.99,
                 categoryId: insertedCats.insertedIds[2],
                 stock: 50,
-                image: "https://images.unsplash.com/photo-1560769629-975e13f0c470?q=80&w=600", // White/Clean
+                image: "/images/shoe-yonex-white-orange.png",
                 createdAt: now
             },
 
-            // Bags
+            // Bags & Totes (using your uploaded bag images)
             {
                 name: "Astrex Tour Pro 9-Pack Bag",
                 description: "Thermal lined racket compartments with dedicated shoe and wet pockets.",
                 price: 99.99,
                 categoryId: insertedCats.insertedIds[3],
                 stock: 15,
-                image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?q=80&w=600",
+                image: "/images/bag-victor.png",
                 createdAt: now
             },
             {
@@ -174,7 +174,7 @@ async function run() {
                 price: 69.99,
                 categoryId: insertedCats.insertedIds[3],
                 stock: 30,
-                image: "https://images.unsplash.com/photo-1547949003-9792a18a2601?q=80&w=600",
+                image: "/images/bag-lining-badminton.png",
                 createdAt: now
             },
             {
@@ -183,18 +183,18 @@ async function run() {
                 price: 79.99,
                 categoryId: insertedCats.insertedIds[3],
                 stock: 20,
-                image: "https://images.unsplash.com/photo-1493723843689-d6401ca826c3?q=80&w=600",
+                image: "/images/bag-mizuno.png",
                 createdAt: now
             },
 
-            // Apparel
+            // Apparel (using your uploaded apparel images)
             {
                 name: "Astrex Performance Tee",
                 description: "Moisture-wicking fabric with anti-odor technology.",
                 price: 34.99,
                 categoryId: insertedCats.insertedIds[4],
                 stock: 100,
-                image: "https://images.unsplash.com/photo-1556821840-3a63f95609a7?q=80&w=600",
+                image: "/images/apparel-perfly-white-teal.png",
                 createdAt: now
             },
             {
@@ -203,7 +203,7 @@ async function run() {
                 price: 39.99,
                 categoryId: insertedCats.insertedIds[4],
                 stock: 80,
-                image: "https://images.unsplash.com/photo-1591195853828-11db59a44f6b?q=80&w=600",
+                image: "/images/apparel-yonex-navy-orange.png",
                 createdAt: now
             },
             {
@@ -212,7 +212,7 @@ async function run() {
                 price: 79.99,
                 categoryId: insertedCats.insertedIds[4],
                 stock: 40,
-                image: "https://images.unsplash.com/photo-1517466787929-bc90951d6dbb?q=80&w=600",
+                image: "/images/apparel-yonex-blue.png",
                 createdAt: now
             },
             {
@@ -221,7 +221,7 @@ async function run() {
                 price: 49.99,
                 categoryId: insertedCats.insertedIds[4],
                 stock: 60,
-                image: "https://images.unsplash.com/photo-1576566588028-4147f3842f27?q=80&w=600",
+                image: "/images/apparel-yonex-red.png",
                 createdAt: now
             },
             {
@@ -230,36 +230,36 @@ async function run() {
                 price: 19.99,
                 categoryId: insertedCats.insertedIds[4],
                 stock: 150,
-                image: "https://images.unsplash.com/photo-1586350977771-b3b0abd50c82?q=80&w=600",
+                image: "/images/apparel-sport-socks.png",
                 createdAt: now
             },
 
-            // Accessories
+            // Accessories (1st image = 1st product, 2nd = 2nd, … continuously)
             {
                 name: "Astrex Wristbands (Pair)",
                 description: "Absorbent terry cloth wristbands for sweat management.",
                 price: 9.99,
                 categoryId: insertedCats.insertedIds[5],
                 stock: 200,
-                image: "https://images.unsplash.com/photo-1620189507187-1038e47b3952?q=80&w=600",
+                image: "/images/acc-wristbands.png",
                 createdAt: now
             },
             {
-                name: "Astrex Headband Pro",
-                description: "Non-slip silicone grip headband keeps hair and sweat at bay.",
-                price: 12.99,
+                name: "Astrex Court Net",
+                description: "Portable badminton net for court setup.",
+                price: 49.99,
                 categoryId: insertedCats.insertedIds[5],
-                stock: 150,
-                image: "https://images.unsplash.com/photo-1588731234159-8b99631b3fde?q=80&w=600",
+                stock: 40,
+                image: "/images/acc-net.png",
                 createdAt: now
             },
             {
-                name: "Astrex Towel Elite",
-                description: "Microfiber sports towel with quick-dry technology.",
-                price: 24.99,
+                name: "Astrex Scoreboard",
+                description: "Manual flip scoreboard for matches.",
+                price: 34.99,
                 categoryId: insertedCats.insertedIds[5],
-                stock: 100,
-                image: "https://images.unsplash.com/photo-1556821840-3a63f95609a7?q=80&w=600&crop=entropy",
+                stock: 60,
+                image: "/images/acc-scoreboard.png",
                 createdAt: now
             },
             {
@@ -268,18 +268,36 @@ async function run() {
                 price: 29.99,
                 categoryId: insertedCats.insertedIds[5],
                 stock: 80,
-                image: "https://images.unsplash.com/photo-1602143407151-11115cdbf69c?q=80&w=600",
+                image: "/images/acc-water-bottle.png",
+                createdAt: now
+            },
+            {
+                name: "Astrex Towel Elite",
+                description: "Microfiber sports towel with quick-dry technology.",
+                price: 24.99,
+                categoryId: insertedCats.insertedIds[5],
+                stock: 100,
+                image: "/images/acc-towel.png",
+                createdAt: now
+            },
+            {
+                name: "Astrex Headband Pro",
+                description: "Non-slip silicone grip headband keeps hair and sweat at bay.",
+                price: 12.99,
+                categoryId: insertedCats.insertedIds[5],
+                stock: 150,
+                image: "/images/acc-headband.png",
                 createdAt: now
             },
 
-            // Grips
+            // Grips & Tapes (using your uploaded grip images)
             {
                 name: "Astrex Nano-Grip Pro XL",
                 description: "Extreme friction coating for precise handle control. Pack of 12.",
                 price: 14.99,
                 categoryId: insertedCats.insertedIds[6],
                 stock: 500,
-                image: "https://images.unsplash.com/photo-1616248249518-b16013cd4e42?q=80&w=600",
+                image: "/images/grip-head-overgrips.png",
                 createdAt: now
             },
             {
@@ -288,18 +306,27 @@ async function run() {
                 price: 8.99,
                 categoryId: insertedCats.insertedIds[6],
                 stock: 400,
-                image: "https://images.unsplash.com/photo-1616248249518-b16013cd4e42?q=80&w=600&hue=90",
+                image: "/images/grip-yonex-tape.png",
+                createdAt: now
+            },
+            {
+                name: "Astrex Pro Towel Grip",
+                description: "Absorbent terry cloth grip for sweat absorption and secure hold.",
+                price: 11.99,
+                categoryId: insertedCats.insertedIds[6],
+                stock: 300,
+                image: "/images/grip-towel-red.png",
                 createdAt: now
             },
 
-            // Strings
+            // Strings (using your uploaded string images)
             {
                 name: "Astrex Titan-String 0.66",
                 description: "High-repulsion titanium coated strings for sharp hitting sound.",
                 price: 12.99,
                 categoryId: insertedCats.insertedIds[7],
                 stock: 300,
-                image: "https://images.unsplash.com/photo-1620371350502-999e9a7d80a4?q=80&w=600&crop=entropy",
+                image: "/images/string-lining-rebound.png",
                 createdAt: now
             },
             {
@@ -308,7 +335,43 @@ async function run() {
                 price: 10.99,
                 categoryId: insertedCats.insertedIds[7],
                 stock: 250,
-                image: "https://images.unsplash.com/photo-1554068865-24cecd4e34b8?q=80&w=600&crop=entropy",
+                image: "/images/string-yonex-exbolt65.png",
+                createdAt: now
+            },
+            {
+                name: "Astrex Pro String 0.65",
+                description: "Super repulsion string for agile shots and crisp sound.",
+                price: 14.99,
+                categoryId: insertedCats.insertedIds[7],
+                stock: 200,
+                image: "/images/string-hundred-magnite.png",
+                createdAt: now
+            },
+            {
+                name: "Astrex Boost String 0.66",
+                description: "Optimum repulsion and crisp sound. Japan edition.",
+                price: 13.99,
+                categoryId: insertedCats.insertedIds[7],
+                stock: 220,
+                image: "/images/string-hundred-boost.png",
+                createdAt: now
+            },
+            {
+                name: "Astrex Hybrid String 0.69",
+                description: "Multifilament hybrid string for durability and feel.",
+                price: 11.99,
+                categoryId: insertedCats.insertedIds[7],
+                stock: 180,
+                image: "/images/string-hybrid-069.png",
+                createdAt: now
+            },
+            {
+                name: "Astrex Control String 0.65",
+                description: "Durability and feel for precise control.",
+                price: 13.99,
+                categoryId: insertedCats.insertedIds[7],
+                stock: 200,
+                image: "/images/string-control-065.png",
                 createdAt: now
             }
         ];

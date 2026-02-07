@@ -3,9 +3,10 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAppContext } from '../context/AppContext';
 import { useUIContext } from '../context/UIContext';
 import { fetchData } from '../api';
+import { getProductImage } from '../utils/racketImages';
 
 const Cart = () => {
-    const { cart, removeFromCart, updateQuantity, cartTotal, user, clearCart } = useAppContext();
+    const { cart, removeFromCart, updateQuantity, cartTotal, user, clearCart, logoutUser } = useAppContext();
     const [isProcessing, setIsProcessing] = useState(false);
     const navigate = useNavigate();
 
@@ -46,7 +47,15 @@ const Cart = () => {
             });
 
         } catch (err) {
-            showToast('Failed to process order: ' + err.message, 'error');
+            const msg = err.message || '';
+            const isTokenExpired = msg.toLowerCase().includes('token expired') || msg.toLowerCase().includes('invalid token') || msg.toLowerCase().includes('expired');
+            if (isTokenExpired) {
+                logoutUser();
+                showToast('Your session expired. Please sign in again to complete your order.', 'error');
+                navigate('/login');
+            } else {
+                showToast('Failed to process order: ' + msg, 'error');
+            }
         } finally {
             setIsProcessing(false);
         }
@@ -76,7 +85,7 @@ const Cart = () => {
                         return (
                             <div key={itemId} className="cart-item">
                                 <div className="cart-item-img">
-                                    <img src={item.image} alt={item.name} />
+                                    <img src={getProductImage(item) || item.image} alt={item.name} />
                                 </div>
                                 <div>
                                     <h3 style={{ fontSize: '1.25rem', fontWeight: 700, marginBottom: '5px' }}>{item.name}</h3>
