@@ -4,13 +4,19 @@ export const fetchData = async (endpoint, options = {}) => {
     const token = localStorage.getItem('token');
 
     try {
+        const headers = {
+            'Content-Type': 'application/json',
+            ...options.headers,
+        };
+
+        // Only add Authorization header if token exists
+        if (token) {
+            headers['Authorization'] = `Bearer ${token}`;
+        }
+
         const response = await fetch(`${API_URL}${endpoint}`, {
             ...options,
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': token ? `Bearer ${token}` : '',
-                ...options.headers,
-            },
+            headers,
         });
 
         if (!response.ok) {
