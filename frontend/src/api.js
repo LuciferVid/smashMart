@@ -9,7 +9,6 @@ export const fetchData = async (endpoint, options = {}) => {
             ...options.headers,
         };
 
-        // Only add Authorization header if token exists
         if (token) {
             headers['Authorization'] = `Bearer ${token}`;
         }
@@ -28,7 +27,7 @@ export const fetchData = async (endpoint, options = {}) => {
                     const errorData = await response.json();
                     errorMessage = errorData.error || errorData.message || errorMessage;
                 } catch {
-                    // If JSON parsing fails, use default message
+                    console.log("some error is coming ..")
                 }
             } else {
                 const text = await response.text();
