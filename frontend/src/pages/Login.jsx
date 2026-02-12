@@ -24,7 +24,7 @@ const Login = () => {
             await googleLoginUser(response.credential);
             navigate('/');
         } catch (err) {
-            setError('Google login failed. Please try again.');
+            setError(err.message || 'Google login failed. Please try again.');
         }
     };
 
