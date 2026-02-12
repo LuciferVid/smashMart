@@ -43,11 +43,11 @@ exports.createOrder = async (req, res) => {
 
         const result = await ordersCollection.insertOne(newOrder);
 
-        // Clear cart after successful order
+
         try {
             await cartsCollection.deleteOne({ userId: new ObjectId(userId) });
         } catch (e) {
-            // Cart clearing failure shouldn't fail the order
+
         }
 
         res.status(201).json({ id: result.insertedId, ...newOrder, userId });

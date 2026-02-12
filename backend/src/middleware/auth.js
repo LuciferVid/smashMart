@@ -4,17 +4,17 @@ module.exports = (req, res, next) => {
     try {
         const authHeader = req.headers.authorization;
         
-        // Check if authorization header exists and is not empty
+
         if (!authHeader || typeof authHeader !== 'string' || authHeader.trim() === '') {
             return res.status(401).json({ error: 'Authentication required' });
         }
 
-        // Check if it starts with 'Bearer '
+
         if (!authHeader.startsWith('Bearer ')) {
             return res.status(401).json({ error: 'Invalid authentication format' });
         }
 
-        const token = authHeader.substring(7).trim(); // Remove 'Bearer ' prefix
+        const token = authHeader.substring(7).trim();  
         
         if (!token || token === '') {
             return res.status(401).json({ error: 'Invalid authentication format' });
