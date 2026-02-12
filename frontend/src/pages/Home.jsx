@@ -127,8 +127,8 @@ const Home = () => {
             {/* STORY / LIFESTYLE SECTION */}
             <section className="section" style={{ background: 'var(--bg-sub)' }}>
                 <div className="container">
-                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '80px', alignItems: 'center' }}>
-                        <div style={{ order: 2 }}>
+                    <div className="story-grid">
+                        <div className="story-image-container">
                             <img src="https://images.unsplash.com/photo-1521537634581-0dced2fee2ef?q=80&w=1200" style={{ width: '100%', borderRadius: '12px', boxShadow: 'var(--shadow)' }} alt="Astrex Philosophy" />
                         </div>
                         <div>
@@ -143,7 +143,7 @@ const Home = () => {
 
             {/* PERFORMANCE CATEGORIES - your uploaded images by category */}
             <section className="section container">
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '30px', height: '500px' }}>
+                <div className="categories-grid">
                     <div style={{ position: 'relative', overflow: 'hidden', borderRadius: '12px' }}>
                         <img src="/images/racket-yonex-blue.png" style={{ width: '100%', height: '100%', objectFit: 'cover' }} alt="Rackets" />
                         <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.8), transparent)', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', padding: '40px' }}>
@@ -173,8 +173,8 @@ const Home = () => {
                 <div className="section-title">
                     <h2 style={{ margin: 0 }}>The Astrex Circuit</h2>
                 </div>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gridAutoRows: '250px', gap: '20px' }}>
-                    <div style={{ gridColumn: 'span 2', gridRow: 'span 2', borderRadius: '12px', overflow: 'hidden' }}>
+                <div className="gallery-grid">
+                    <div className="gallery-item-large" style={{ gridColumn: 'span 2', gridRow: 'span 2', borderRadius: '12px', overflow: 'hidden' }}>
                         <img src="/images/astrex-circuit-hero.png" style={{ width: '100%', height: '100%', objectFit: 'cover' }} alt="The Astrex Circuit" />
                     </div>
                     <div style={{ borderRadius: '12px', overflow: 'hidden' }}>
@@ -193,7 +193,7 @@ const Home = () => {
             <section className="section" style={{ textAlign: 'center', borderTop: '1px solid var(--border)' }}>
                 <div className="container">
                     <h2 style={{ marginBottom: '50px' }}>Preferred by Professionals</h2>
-                    <div style={{ display: 'flex', justifyContent: 'center', gap: '80px', opacity: 0.5, filter: 'grayscale(1)' }}>
+                    <div className="trust-logos">
                         <span style={{ fontSize: '1.5rem', fontWeight: 900 }}>WBF</span>
                         <span style={{ fontSize: '1.5rem', fontWeight: 900 }}>TOKYO LABS</span>
                         <span style={{ fontSize: '1.5rem', fontWeight: 900 }}>ELITE OPEN</span>
@@ -201,6 +201,7 @@ const Home = () => {
                     </div>
                 </div>
             </section>
+
 
             {/* BOTTOM CTA */}
             <section className="section" style={{ background: 'var(--accent)', color: '#000', textAlign: 'center' }}>

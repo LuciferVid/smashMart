@@ -21,8 +21,8 @@ const Contact = () => {
                     <p style={{ color: 'var(--text-dim)', maxWidth: '600px', margin: '0 auto' }}>Our team is here to help you find the perfect gear for your game.</p>
                 </div>
 
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '80px' }}>
-                    <div style={{ background: 'var(--bg-sub)', padding: '60px', borderRadius: '16px', border: '1px solid var(--border)' }}>
+                <div className="contact-grid">
+                    <div style={{ background: 'var(--bg-sub)', padding: 'clamp(20px, 5%, 60px)', borderRadius: '16px', border: '1px solid var(--border)' }}>
                         {status && <div style={{ background: 'rgba(0,255,170,0.1)', color: 'var(--accent)', padding: '20px', borderRadius: '8px', marginBottom: '30px', fontWeight: 700 }}>{status}</div>}
                         <form onSubmit={handleSubmit}>
                             <div className="input-group">
@@ -46,6 +46,7 @@ const Contact = () => {
                     </div>
 
                     <div>
+
                         <div style={{ marginBottom: '50px' }}>
                             <h3 style={{ fontSize: '1.5rem', fontWeight: 800, marginBottom: '15px' }}>Customer Support</h3>
                             <p style={{ color: 'var(--text-dim)', marginBottom: '10px' }}>Available Mon-Fri, 9am - 6pm JST</p>

@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAppContext } from '../context/AppContext';
+import { GoogleLogin } from '@react-oauth/google';
 
 const Login = () => {
     const [credentials, setCredentials] = useState({ email: '', password: '' });
     const [error, setError] = useState('');
-    const { loginUser } = useAppContext();
+    const { loginUser, googleLoginUser } = useAppContext();
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
@@ -15,6 +16,15 @@ const Login = () => {
             navigate('/');
         } catch (err) {
             setError(err.message);
+        }
+    };
+
+    const handleGoogleSuccess = async (response) => {
+        try {
+            await googleLoginUser(response.credential);
+            navigate('/');
+        } catch (err) {
+            setError('Google login failed. Please try again.');
         }
     };
 
@@ -30,6 +40,22 @@ const Login = () => {
                 </div>
 
                 {error && <p style={{ color: '#ff3b3b', marginBottom: '20px', textAlign: 'center', fontSize: '0.8rem', fontWeight: 700 }}>{error}</p>}
+
+                <div style={{ marginBottom: '25px', display: 'flex', justifyContent: 'center' }}>
+                    <GoogleLogin
+                        onSuccess={handleGoogleSuccess}
+                        onError={() => setError('Google Authentication Failed')}
+                        theme="filled_black"
+                        shape="rectangular"
+                        width="100%"
+                    />
+                </div>
+
+                <div style={{ display: 'flex', alignItems: 'center', margin: '20px 0', color: 'var(--text-dim)', fontSize: '0.75rem' }}>
+                    <div style={{ flex: 1, height: '1px', background: 'var(--border)' }}></div>
+                    <span style={{ margin: '0 10px', fontWeight: 800 }}>OR USE EMAIL</span>
+                    <div style={{ flex: 1, height: '1px', background: 'var(--border)' }}></div>
+                </div>
 
                 <form onSubmit={handleSubmit}>
                     <div className="input-group">

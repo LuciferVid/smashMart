@@ -53,7 +53,7 @@ const Shop = () => {
 
     return (
         <div className="shop-page container" style={{ paddingTop: '60px', paddingBottom: '120px' }}>
-            <div className="shop-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '40px' }}>
+            <div className="shop-header">
                 <div>
                     <h1 style={{ fontSize: '3.5rem', fontWeight: 900, marginBottom: '10px' }}>The Shop</h1>
                     <p style={{ color: 'var(--text-dim)' }}>High-performance equipment for the modern court.</p>
@@ -61,28 +61,28 @@ const Shop = () => {
             </div>
 
             {/* FEATURED VISUALS */}
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '20px', marginBottom: '80px', height: '180px' }}>
-                <div style={{ position: 'relative', borderRadius: '12px', overflow: 'hidden', border: '1px solid var(--border)' }}>
+            <div className="featured-visuals">
+                <div style={{ position: 'relative', borderRadius: '12px', overflow: 'hidden', border: '1px solid var(--border)', aspectRatio: '16/9' }}>
                     <img src="/images/racket-yonex-blue.png" style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.3 }} alt="Rackets" />
-                    <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 900, fontSize: '1rem', letterSpacing: '4px' }}>PRO RACKETS</div>
+                    <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 900, fontSize: '0.8rem', letterSpacing: '4px' }}>PRO RACKETS</div>
                 </div>
-                <div style={{ position: 'relative', borderRadius: '12px', overflow: 'hidden', border: '1px solid var(--border)' }}>
+                <div style={{ position: 'relative', borderRadius: '12px', overflow: 'hidden', border: '1px solid var(--border)', aspectRatio: '16/9' }}>
                     <img src="/images/shoe-yonex-aerus.png" style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.3 }} alt="Shoes" />
-                    <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 900, fontSize: '1rem', letterSpacing: '4px' }}>ELITE FOOTWEAR</div>
+                    <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 900, fontSize: '0.8rem', letterSpacing: '4px' }}>ELITE FOOTWEAR</div>
                 </div>
-                <div style={{ position: 'relative', borderRadius: '12px', overflow: 'hidden', border: '1px solid var(--border)' }}>
+                <div style={{ position: 'relative', borderRadius: '12px', overflow: 'hidden', border: '1px solid var(--border)', aspectRatio: '16/9' }}>
                     <img src="/images/shuttle-mavis-350.png" style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.3 }} alt="Shuttles" />
-                    <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 900, fontSize: '1rem', letterSpacing: '4px' }}>PREMIUM SHUTTLES</div>
+                    <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 900, fontSize: '0.8rem', letterSpacing: '4px' }}>PREMIUM SHUTTLES</div>
                 </div>
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: '250px 1fr', gap: '60px' }}>
+            <div className="shop-grid">
                 <aside>
                     <h4 style={{ fontSize: '0.8rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '2px', marginBottom: '25px', borderBottom: '1px solid var(--border)', paddingBottom: '15px' }}>Categories</h4>
-                    <ul style={{ listStyle: 'none' }}>
-                        <li style={{ marginBottom: '15px', cursor: 'pointer', fontWeight: 700, fontSize: '0.9rem', color: activeCategory === 'All' ? 'var(--accent)' : 'var(--text-dim)' }} onClick={() => filterByCategory('All', 'All')}>All Equipment</li>
+                    <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '15px' }} className="shop-categories">
+                        <li style={{ cursor: 'pointer', fontWeight: 700, fontSize: '0.9rem', color: activeCategory === 'All' ? 'var(--accent)' : 'var(--text-dim)' }} onClick={() => filterByCategory('All', 'All')}>All Equipment</li>
                         {categories.map(cat => (
-                            <li key={cat.id || cat._id} style={{ marginBottom: '15px', cursor: 'pointer', fontWeight: 700, fontSize: '0.9rem', color: activeCategory === cat.name ? 'var(--accent)' : 'var(--text-dim)' }} onClick={() => filterByCategory(cat.id || cat._id, cat.name)}>{cat.name}</li>
+                            <li key={cat.id || cat._id} style={{ cursor: 'pointer', fontWeight: 700, fontSize: '0.9rem', color: activeCategory === cat.name ? 'var(--accent)' : 'var(--text-dim)' }} onClick={() => filterByCategory(cat.id || cat._id, cat.name)}>{cat.name}</li>
                         ))}
                     </ul>
                 </aside>
@@ -91,7 +91,7 @@ const Shop = () => {
                     {loading ? (
                         <div style={{ textAlign: 'center', padding: '100px', fontWeight: 800 }}>Loading Store...</div>
                     ) : (
-                        <div className="product-grid" style={{ gridTemplateColumns: 'repeat(3, 1fr)' }}>
+                        <div className="product-grid">
                             {filteredProducts.map(product => (
                                 <div key={product.id || product._id} className="product-card">
                                     <div className="product-image">
@@ -119,6 +119,7 @@ const Shop = () => {
                 </main>
             </div>
         </div>
+
     );
 };
 

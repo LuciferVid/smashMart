@@ -83,51 +83,39 @@ const Orders = () => {
                 <div style={{ display: 'grid', gap: '40px' }}>
                     {orders.map((order) => (
                         <div key={order.id} style={{ background: 'var(--bg-sub)', border: '1px solid var(--border)', borderRadius: '12px', overflow: 'hidden' }}>
-                            <div style={{ padding: '20px 30px', background: 'rgba(255,255,255,0.03)', borderBottom: '1px solid var(--border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                            <div className="order-header">
                                 <div>
                                     <span style={{ fontSize: '0.7rem', color: 'var(--text-dim)', fontWeight: 800, textTransform: 'uppercase', display: 'block' }}>Order ID</span>
                                     <span style={{ fontWeight: 700, fontSize: '0.9rem' }}>#{order.id.slice(-8).toUpperCase()}</span>
                                 </div>
-                                <div style={{ textAlign: 'center' }}>
+                                <div>
                                     <span style={{ fontSize: '0.7rem', color: 'var(--text-dim)', fontWeight: 800, textTransform: 'uppercase', display: 'block' }}>Date</span>
                                     <span style={{ fontWeight: 700, fontSize: '0.9rem' }}>{new Date(order.createdAt).toLocaleDateString()}</span>
                                 </div>
-                                <div style={{ textAlign: 'center' }}>
+                                <div>
                                     <span style={{ fontSize: '0.7rem', color: 'var(--text-dim)', fontWeight: 800, textTransform: 'uppercase', display: 'block' }}>Status</span>
                                     <span style={{ color: 'var(--accent)', fontWeight: 900, fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '1px' }}>{order.status}</span>
                                 </div>
-                                <div style={{ textAlign: 'right' }}>
+                                <div>
                                     <span style={{ fontSize: '0.7rem', color: 'var(--text-dim)', fontWeight: 800, textTransform: 'uppercase', display: 'block' }}>Total</span>
                                     <span style={{ fontWeight: 900, fontSize: '1.2rem', color: 'var(--accent)' }}>${order.total.toFixed(2)}</span>
                                 </div>
                                 {order.status === 'pending' && (
                                     <button
                                         onClick={() => handleCancelOrder(order.id)}
+                                        className="btn-outline"
                                         style={{
-                                            background: 'transparent',
-                                            border: '1px solid #ff3b3b',
+                                            borderColor: '#ff3b3b',
                                             color: '#ff3b3b',
                                             padding: '8px 20px',
-                                            borderRadius: '4px',
-                                            cursor: 'pointer',
-                                            fontWeight: 800,
-                                            fontSize: '0.7rem',
-                                            textTransform: 'uppercase',
-                                            transition: 'all 0.3s ease'
-                                        }}
-                                        onMouseEnter={(e) => {
-                                            e.target.style.background = '#ff3b3b';
-                                            e.target.style.color = '#fff';
-                                        }}
-                                        onMouseLeave={(e) => {
-                                            e.target.style.background = 'transparent';
-                                            e.target.style.color = '#ff3b3b';
+                                            fontSize: '0.7rem'
                                         }}
                                     >
                                         Cancel Order
                                     </button>
                                 )}
                             </div>
+
                             <div style={{ padding: '30px' }}>
                                 <div style={{ display: 'grid', gap: '20px' }}>
                                     {order.items.map((item, idx) => (

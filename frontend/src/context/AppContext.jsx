@@ -44,6 +44,17 @@ export const AppProvider = ({ children }) => {
         return response;
     };
 
+    const googleLoginUser = async (credential) => {
+        const data = await fetchData('/auth/google', {
+            method: 'POST',
+            body: JSON.stringify({ credential }),
+        });
+        localStorage.setItem('token', data.token);
+        localStorage.setItem('user', JSON.stringify(data.user));
+        setUser(data.user);
+        return data;
+    };
+
     const logoutUser = () => {
         localStorage.removeItem('token');
         localStorage.removeItem('user');
@@ -91,6 +102,7 @@ export const AppProvider = ({ children }) => {
                 setUser,
                 loginUser,
                 signupUser,
+                googleLoginUser,
                 logoutUser,
                 cart,
                 addToCart,

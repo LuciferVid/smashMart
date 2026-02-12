@@ -15,32 +15,36 @@ import Contact from './pages/Contact';
 import Orders from './pages/Orders';
 import './styles/main.css';
 
+import { GoogleOAuthProvider } from '@react-oauth/google';
+
 function App() {
   return (
-    <ErrorBoundary>
-      <AppProvider>
-        <UIProvider>
-          <Router>
-            <div className="app">
-              <Header />
-              <GlobalUI />
-              <main>
-                <Routes>
-                  <Route path="/" element={<Home />} />
-                  <Route path="/shop" element={<Shop />} />
-                  <Route path="/login" element={<Login />} />
-                  <Route path="/signup" element={<Signup />} />
-                  <Route path="/cart" element={<Cart />} />
-                  <Route path="/contact" element={<Contact />} />
-                  <Route path="/orders" element={<Orders />} />
-                </Routes>
-              </main>
-              <Footer />
-            </div>
-          </Router>
-        </UIProvider>
-      </AppProvider>
-    </ErrorBoundary>
+    <GoogleOAuthProvider clientId="225404391416-5feb5b6fkvohr0ne65odohfkj798tdg1.apps.googleusercontent.com">
+      <ErrorBoundary>
+        <AppProvider>
+          <UIProvider>
+            <Router>
+              <div className="app">
+                <Header />
+                <GlobalUI />
+                <main>
+                  <Routes>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/shop" element={<Shop />} />
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/signup" element={<Signup />} />
+                    <Route path="/cart" element={<Cart />} />
+                    <Route path="/contact" element={<Contact />} />
+                    <Route path="/orders" element={<Orders />} />
+                  </Routes>
+                </main>
+                <Footer />
+              </div>
+            </Router>
+          </UIProvider>
+        </AppProvider>
+      </ErrorBoundary>
+    </GoogleOAuthProvider>
   );
 }
 

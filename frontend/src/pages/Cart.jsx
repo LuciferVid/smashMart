@@ -78,7 +78,7 @@ const Cart = () => {
                 <p style={{ color: 'var(--text-dim)' }}>{cart.length} items in your bag</p>
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 400px', gap: '80px' }}>
+            <div className="cart-grid">
                 <div className="cart-list">
                     {cart.map(item => {
                         const itemId = item.id || item._id;
@@ -131,10 +131,10 @@ const Cart = () => {
                         >
                             {isProcessing ? 'SCANNING TERMINAL...' : 'Checkout Now'}
                         </button>
-                        <div style={{ marginTop: '30px', textAlign: 'center' }}>
-                            <img src="https://img.icons8.com/color/48/000000/visa.png" width="30" style={{ margin: '0 5px', filter: 'grayscale(1) brightness(2)' }} alt="visa" />
-                            <img src="https://img.icons8.com/color/48/000000/mastercard.png" width="30" style={{ margin: '0 5px', filter: 'grayscale(1) brightness(2)' }} alt="mastercard" />
-                            <img src="https://img.icons8.com/color/48/000000/apple-pay.png" width="30" style={{ margin: '0 5px', filter: 'grayscale(1) brightness(2)' }} alt="applepay" />
+                        <div style={{ marginTop: '30px', textAlign: 'center', display: 'flex', justifyContent: 'center', gap: '15px' }}>
+                            <img src="https://img.icons8.com/color/48/000000/visa.png" width="32" style={{ cursor: 'pointer', transition: 'transform 0.3s ease' }} onMouseOver={(e) => e.target.style.transform = 'scale(1.15)'} onMouseOut={(e) => e.target.style.transform = 'scale(1)'} alt="visa" />
+                            <img src="https://img.icons8.com/color/48/000000/mastercard.png" width="32" style={{ cursor: 'pointer', transition: 'transform 0.3s ease' }} onMouseOver={(e) => e.target.style.transform = 'scale(1.15)'} onMouseOut={(e) => e.target.style.transform = 'scale(1)'} alt="mastercard" />
+                            <img src="https://img.icons8.com/color/48/000000/apple-pay.png" width="32" style={{ cursor: 'pointer', transition: 'transform 0.3s ease' }} onMouseOver={(e) => e.target.style.transform = 'scale(1.15)'} onMouseOut={(e) => e.target.style.transform = 'scale(1)'} alt="applepay" />
                         </div>
                     </div>
                 </aside>
