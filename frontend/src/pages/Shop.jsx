@@ -33,7 +33,7 @@ const Shop = () => {
                 } else {
                     setFilteredProducts(data);
                 }
-            } catch (_err) {
+            } catch {
                 setProducts([]);
             } finally {
                 setLoading(false);

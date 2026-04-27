@@ -18,8 +18,7 @@ export const AppProvider = ({ children }) => {
             try {
                 const data = await fetchData('/categories');
                 setCategories(data);
-            } catch (_err) {
-            }
+            } catch { /* silently fail */ }
         };
         loadCategories();
     }, []);
