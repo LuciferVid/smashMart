@@ -3,33 +3,39 @@
 # ⚡ SMASH
 ### Premium Badminton E-commerce Platform
 
-A full-stack, high-performance e-commerce platform built for the serious badminton athlete.
+> A full-stack, high-performance e-commerce platform built for the serious badminton athlete.
 
-![CI](https://github.com/<your-username>/smashMart/actions/workflows/ci.yml/badge.svg)
-![CD](https://github.com/<your-username>/smashMart/actions/workflows/cd.yml/badge.svg)
+[![CI](https://github.com/yogesh968/smashMart/actions/workflows/ci.yml/badge.svg)](https://github.com/yogesh968/smashMart/actions/workflows/ci.yml)
+[![CD](https://github.com/yogesh968/smashMart/actions/workflows/cd.yml/badge.svg)](https://github.com/yogesh968/smashMart/actions/workflows/cd.yml)
+![Node](https://img.shields.io/badge/Node.js-18+-339933?logo=node.js&logoColor=white)
+![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=black)
+![MongoDB](https://img.shields.io/badge/MongoDB-Atlas-47A248?logo=mongodb&logoColor=white)
+![License](https://img.shields.io/badge/License-MIT-d4f000)
 
 </div>
 
 ---
 
-## Overview
+## 📌 Overview
 
-SMASH is a luxury badminton gear store with a minimalist black-and-white aesthetic, neon lime accents, and a full shopping experience — from browsing to checkout. Built with React on the frontend and Node.js/Express + MongoDB on the backend.
-
----
-
-## Features
-
-- **Dynamic Shop** — Category filtering, live stock, product search
-- **Shopping Cart** — Persistent cart with quantity management and live totals
-- **Auth System** — JWT-based login/signup + Google OAuth
-- **Order Management** — Place and track orders per user
-- **Responsive UI** — Mobile-first, minimalist design with Public Sans & Outfit fonts
-- **Error Handling** — Global error boundary + toast/modal notification system
+**SMASH** is a luxury badminton gear store with a minimalist black-and-white aesthetic, neon lime accents, and a full shopping experience — from browsing to checkout. Built with React on the frontend and Node.js/Express + MongoDB on the backend.
 
 ---
 
-## Tech Stack
+## ✨ Features
+
+| Feature | Description |
+|---|---|
+| 🛍️ Dynamic Shop | Category filtering, live stock, product search |
+| 🛒 Shopping Cart | Persistent cart with quantity management and live totals |
+| 🔐 Auth System | JWT-based login/signup + Google OAuth |
+| 📦 Order Management | Place and track orders per user |
+| 📱 Responsive UI | Mobile-first, minimalist design with Public Sans & Outfit fonts |
+| 🚨 Error Handling | Global error boundary + toast/modal notification system |
+
+---
+
+## 🛠️ Tech Stack
 
 | Layer | Technology |
 |---|---|
@@ -38,12 +44,12 @@ SMASH is a luxury badminton gear store with a minimalist black-and-white aesthet
 | ORM | Prisma |
 | Database | MongoDB Atlas |
 | Auth | JWT, Google OAuth (`@react-oauth/google`) |
-| Deployment | Vercel (frontend), manual/cloud (backend) |
+| Deployment | Vercel (frontend) |
 | CI/CD | GitHub Actions |
 
 ---
 
-## Project Structure
+## 📁 Project Structure
 
 ```
 smashMart/
@@ -72,21 +78,21 @@ smashMart/
 
 ---
 
-## Getting Started
+## 🚀 Getting Started
 
 ### Prerequisites
 
 - Node.js >= 18
 - MongoDB Atlas account (or local MongoDB)
 
-### Backend
+### Backend Setup
 
 ```bash
 cd backend
 npm install
 ```
 
-Create a `.env` file:
+Create a `.env` file in `/backend`:
 
 ```env
 DATABASE_URL=mongodb+srv://<username>:<password>@cluster.mongodb.net/smashmart
@@ -99,7 +105,7 @@ node seed-native.js   # Seed initial categories & products
 npm run dev           # Starts on http://localhost:5000
 ```
 
-### Frontend
+### Frontend Setup
 
 ```bash
 cd frontend
@@ -109,23 +115,23 @@ npm run dev           # Starts on http://localhost:5173
 
 ---
 
-## API Endpoints
+## 📡 API Endpoints
 
 | Method | Endpoint | Description | Auth |
 |---|---|---|---|
-| POST | `/api/auth/signup` | Register new user | — |
-| POST | `/api/auth/login` | Login with email/password | — |
-| POST | `/api/auth/google` | Google OAuth login | — |
-| GET | `/api/products` | List all products | — |
-| GET | `/api/categories` | List all categories | — |
-| GET | `/api/cart` | Get user's cart | ✅ |
-| POST | `/api/cart` | Add item to cart | ✅ |
-| GET | `/api/orders` | Get user's orders | ✅ |
-| POST | `/api/orders` | Place an order | ✅ |
+| `POST` | `/api/auth/signup` | Register new user | — |
+| `POST` | `/api/auth/login` | Login with email/password | — |
+| `POST` | `/api/auth/google` | Google OAuth login | — |
+| `GET` | `/api/products` | List all products | — |
+| `GET` | `/api/categories` | List all categories | — |
+| `GET` | `/api/cart` | Get user's cart | ✅ JWT |
+| `POST` | `/api/cart` | Add item to cart | ✅ JWT |
+| `GET` | `/api/orders` | Get user's orders | ✅ JWT |
+| `POST` | `/api/orders` | Place an order | ✅ JWT |
 
 ---
 
-## Data Models
+## 🗄️ Data Models
 
 ```
 User       — id, email, password, googleId, name, role
@@ -137,30 +143,43 @@ Order      — id, userId, items[ { productId, name, price, quantity } ], total,
 
 ---
 
-## CI/CD Pipeline
+## ⚙️ CI/CD Pipeline
 
 This project uses **GitHub Actions** for automated testing and deployment.
 
-### CI — Runs on every push and pull request
+### CI — Every push & pull request
 
 **File:** `.github/workflows/ci.yml`
 
-| Job | Steps |
-|---|---|
-| Frontend | `npm ci` → ESLint → `vite build` |
-| Backend | `npm ci` → `prisma generate` (schema validation) |
+```
+Push / PR
+    │
+    ├── Frontend Job
+    │     ├── npm ci
+    │     ├── eslint .
+    │     └── vite build
+    │
+    └── Backend Job
+          ├── npm ci
+          └── prisma generate
+```
 
-### CD — Runs on push to `main` only
+### CD — Push to `main` only
 
 **File:** `.github/workflows/cd.yml`
 
-| Job | Steps |
-|---|---|
-| Deploy | Checkout → Install Vercel CLI → `vercel --prod` |
+```
+Push to main
+    │
+    └── Deploy Job
+          ├── checkout
+          ├── install vercel cli
+          └── vercel --prod
+```
 
 ### Required GitHub Secrets
 
-Go to **Settings → Secrets and variables → Actions** and add:
+> **Settings → Secrets and variables → Actions**
 
 | Secret | Description |
 |---|---|
@@ -171,18 +190,18 @@ Go to **Settings → Secrets and variables → Actions** and add:
 
 ---
 
-## UI Design
+## 🎨 UI Design Tokens
 
-| Token | Value |
-|---|---|
-| Primary | `#000000` (Black) |
-| Background | `#FFFFFF` (White) |
-| Accent | `#d4f000` (Neon Lime) |
-| Display Font | Outfit |
-| Body Font | Public Sans |
+| Token | Value | Preview |
+|---|---|---|
+| Primary | `#000000` | ⬛ Black |
+| Background | `#FFFFFF` | ⬜ White |
+| Accent | `#d4f000` | 🟨 Neon Lime |
+| Display Font | `Outfit` | — |
+| Body Font | `Public Sans` | — |
 
 ---
 
-## License
+## 📄 License
 
-MIT
+MIT © [yogesh968](https://github.com/yogesh968)
