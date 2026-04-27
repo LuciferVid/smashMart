@@ -19,7 +19,7 @@ const Home = () => {
             try {
                 const data = await fetchData('/products');
                 setProducts(data);
-            } catch (err) {
+            } catch (_err) {
                 // Silently fail - will use fallback products
             }
         };
