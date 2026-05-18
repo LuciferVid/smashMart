@@ -1,6 +1,6 @@
 <div align="center">
 
-# ⚡ SMASH
+# SMASH
 ### Premium Badminton E-commerce Platform
 
 > A full-stack, high-performance e-commerce platform built for the serious badminton athlete.
@@ -16,13 +16,13 @@
 
 ---
 
-## 📌 Overview
+## Overview
 
 **SMASH** is a luxury badminton gear store with a minimalist black-and-white aesthetic, neon lime accents, and a full shopping experience — from browsing to checkout. Built with React on the frontend and Node.js/Express + MongoDB on the backend.
 
 ---
 
-## ✨ Features
+## Features
 
 | Feature | Description |
 |---|---|
