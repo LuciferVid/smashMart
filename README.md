@@ -5,8 +5,8 @@
 
 > A full-stack, high-performance e-commerce platform built for the serious badminton athlete.
 
-[![CI](https://github.com/yogesh968/smashMart/actions/workflows/ci.yml/badge.svg)](https://github.com/yogesh968/smashMart/actions/workflows/ci.yml)
-[![CD](https://github.com/yogesh968/smashMart/actions/workflows/cd.yml/badge.svg)](https://github.com/yogesh968/smashMart/actions/workflows/cd.yml)
+[![CI](https://github.com/LuciferVid/smashMart/actions/workflows/ci.yml/badge.svg)](https://github.com/LuciferVid/smashMart/actions/workflows/ci.yml)
+[![CD](https://github.com/LuciferVid/smashMart/actions/workflows/cd.yml/badge.svg)](https://github.com/LuciferVid/smashMart/actions/workflows/cd.yml)
 ![Node](https://img.shields.io/badge/Node.js-18+-339933?logo=node.js&logoColor=white)
 ![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=black)
 ![MongoDB](https://img.shields.io/badge/MongoDB-Atlas-47A248?logo=mongodb&logoColor=white)
@@ -204,4 +204,4 @@ Push to main
 
 ## 📄 License
 
-MIT © [yogesh968](https://github.com/yogesh968)
+MIT © [LuciferVid](https://github.com/LuciferVid)

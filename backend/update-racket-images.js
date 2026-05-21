@@ -1,12 +1,5 @@
-/**
- * Updates racket, shuttle, bag, shoe, string, grip, accessory, and apparel product images in the database to use your uploaded images.
- * Run from backend folder: node update-racket-images.js
- */
-const { MongoClient } = require('mongodb');
-require('dotenv').config();
-
-const uri = process.env.DATABASE_URL || 'mongodb+srv://smashmart:Yogesh1987@smashmart.zax6zoc.mongodb.net/badminton';
-const client = new MongoClient(uri);
+const { PrismaClient } = require('@prisma/client');
+const prisma = new PrismaClient();
 
 const RACKET_IMAGE_UPDATES = [
   { name: 'Astrex Phantom X-99 Ultra', image: '/images/racket-yonex-blue.png' },
@@ -73,34 +66,32 @@ const ALL_UPDATES = [...RACKET_IMAGE_UPDATES, ...SHUTTLE_IMAGE_UPDATES, ...BAG_I
 
 async function run() {
   try {
-    await client.connect();
-    console.log('Connected to MongoDB');
-    const db = client.db('badminton');
-    const products = db.collection('Product');
-
+    console.log('Connecting to database...');
     let updated = 0;
+    
     for (const { name, image } of ALL_UPDATES) {
-      const result = await products.updateOne(
-        { name },
-        { $set: { image } }
-      );
-      if (result.modifiedCount > 0) {
+      const prod = await prisma.product.findFirst({
+        where: { name }
+      });
+
+      if (prod) {
+        await prisma.product.update({
+          where: { id: prod.id },
+          data: { image }
+        });
         console.log(`Updated: ${name} -> ${image}`);
         updated++;
-      } else if (result.matchedCount > 0) {
-        console.log(`Already set: ${name}`);
       } else {
-        console.log(`Not found: ${name}`);
+        console.log(`Not found in DB: ${name}`);
       }
     }
 
-    console.log(`Done. Updated ${updated} product images (rackets + shuttles + bags + shoes + strings + grips + accessories + apparel).`);
+    console.log(`Done. Synchronized ${updated} premium product images.`);
+  } catch (e) {
+    console.error('Synchronization failed: ', e);
   } finally {
-    await client.close();
+    await prisma.$disconnect();
   }
 }
 
-run().catch((err) => {
-  console.error(err);
-  process.exit(1);
-});
+run();

@@ -1,7 +1,4 @@
 const prisma = require('../db');
-const { MongoClient, ObjectId } = require('mongodb');
-
-const getMongoUri = () => process.env.DATABASE_URL || "mongodb://localhost:27017/badminton";
 
 exports.getCart = async (req, res) => {
     try {
@@ -15,7 +12,6 @@ exports.getCart = async (req, res) => {
 };
 
 exports.addToCart = async (req, res) => {
-    const client = new MongoClient(getMongoUri());
     try {
         const { productId, quantity } = req.body;
         const userId = req.userData.userId;
@@ -24,42 +20,40 @@ exports.addToCart = async (req, res) => {
             return res.status(400).json({ error: 'Product ID and quantity are required' });
         }
 
-        await client.connect();
-        const db = client.db();
-        const cartsCollection = db.collection('Cart');
+        let cart = await prisma.cart.findUnique({
+            where: { userId }
+        });
 
-        let cart = await cartsCollection.findOne({ userId: new ObjectId(userId) });
-
+        let items = [];
         if (!cart) {
-            const result = await cartsCollection.insertOne({
-                userId: new ObjectId(userId),
-                items: [{ productId, quantity: parseInt(quantity) }]
+            items = [{ productId, quantity: parseInt(quantity) }];
+            cart = await prisma.cart.create({
+                data: {
+                    userId,
+                    items
+                }
             });
-            cart = { id: result.insertedId, userId, items: [{ productId, quantity: parseInt(quantity) }] };
         } else {
-            const itemIndex = cart.items.findIndex(item => item.productId === productId);
-            const items = [...cart.items];
+            items = Array.isArray(cart.items) ? [...cart.items] : [];
+            const itemIndex = items.findIndex(item => item.productId === productId);
             if (itemIndex > -1) {
                 items[itemIndex].quantity += parseInt(quantity);
             } else {
                 items.push({ productId, quantity: parseInt(quantity) });
             }
-            await cartsCollection.updateOne(
-                { userId: new ObjectId(userId) },
-                { $set: { items } }
-            );
-            cart.items = items;
+            cart = await prisma.cart.update({
+                where: { userId },
+                data: { items }
+            });
         }
         res.json(cart);
     } catch (error) {
+        console.error(error);
         res.status(500).json({ error: 'Failed to add item to cart' });
-    } finally {
-        await client.close();
     }
 };
 
 exports.removeFromCart = async (req, res) => {
-    const client = new MongoClient(getMongoUri());
     try {
         const { productId } = req.body;
         const userId = req.userData.userId;
@@ -68,24 +62,22 @@ exports.removeFromCart = async (req, res) => {
             return res.status(400).json({ error: 'Product ID is required' });
         }
 
-        await client.connect();
-        const db = client.db();
-        const cartsCollection = db.collection('Cart');
-
-        let cart = await cartsCollection.findOne({ userId: new ObjectId(userId) });
+        let cart = await prisma.cart.findUnique({
+            where: { userId }
+        });
         if (!cart) {
             return res.status(404).json({ error: 'Cart not found' });
         }
 
-        const items = cart.items.filter(item => item.productId !== productId);
-        await cartsCollection.updateOne(
-            { userId: new ObjectId(userId) },
-            { $set: { items } }
-        );
-        res.json({ ...cart, items });
+        const currentItems = Array.isArray(cart.items) ? cart.items : [];
+        const items = currentItems.filter(item => item.productId !== productId);
+        
+        cart = await prisma.cart.update({
+            where: { userId },
+            data: { items }
+        });
+        res.json(cart);
     } catch (error) {
         res.status(500).json({ error: 'Failed to remove item from cart' });
-    } finally {
-        await client.close();
     }
 };
