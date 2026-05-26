@@ -1,6 +1,16 @@
 {
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
+  "build": {
+    "env": {
+      "VITE_API_URL": "https://smashmart-rhfl.onrender.com/api",
+      "VITE_GOOGLE_CLIENT_ID": "961314711551-cmkhht1grctpoljmc74mfdvgjf5a0f6h.apps.googleusercontent.com"
+    }
+  },
+  "env": {
+    "VITE_API_URL": "https://smashmart-rhfl.onrender.com/api",
+    "VITE_GOOGLE_CLIENT_ID": "961314711551-cmkhht1grctpoljmc74mfdvgjf5a0f6h.apps.googleusercontent.com"
+  },
   "rewrites": [
     {
       "source": "/(.*)",
