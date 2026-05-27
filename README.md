@@ -78,7 +78,7 @@ smashMart/
 
 ---
 
-## 🚀 Getting Started
+## Getting Started
 
 ### Prerequisites
 
@@ -190,7 +190,7 @@ Push to main
 
 ---
 
-## 🎨 UI Design Tokens
+## UI Design Tokens
 
 | Token | Value | Preview |
 |---|---|---|
